@@ -1,52 +1,5 @@
 
-# coding: utf-8
-
-# In[1]:
-
-
-import math
-
-
-# In[2]:
-
-
 from grafos import *
-
-
-# In[3]:
-
-
-g=Grafo()
-
-
-# In[4]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,5)
-g.añadir_arista(5,2)
-g.añadir_arista(2,3)
-g.añadir_arista(3,4)
-g.añadir_arista(3,5)
-g.añadir_arista(3,6)
-g.añadir_arista(6,4)
-g.añadir_arista(5,6)
-
-
-# In[5]:
-
-
-g.ponderado([4,2,8,2,1,7,9,9,3])
-
-
-# In[6]:
-
-
-g.dibujar_ponderado('circo')
-
-
-# In[7]:
-
 
 def Dijkstra(gg, inicial, explicado=False):
     
@@ -166,19 +119,3 @@ def Dijkstra(gg, inicial, explicado=False):
             #print('escogidos: ', escogidos)
 
         return ['Pesos=', m, 'Ruta= ', n]
-
-
-# In[8]:
-
-
-Dijkstra(g,1)
-
-
-# In[9]:
-
-
-for i in g.vertices:
-    print('Vértice ', str(i), ': ')
-    H=Dijkstra(g,i)
-    print(H, '\n')
-
