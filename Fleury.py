@@ -1,37 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(3,1)
-g.añadir_arista(3,2)
-g.añadir_arista(3,4)
-g.añadir_arista(5,3)
-g.añadir_arista(4,5)
-
-
-# In[4]:
-
-
-g.dibujar('neato')
-
-
-# In[5]:
-
 
 def Fleury(g, explicado=False):
     
@@ -176,11 +143,3 @@ def Fleury(g, explicado=False):
                         i = i+1 
         
         return E
-            
-
-
-# In[6]:
-
-
-Fleury(g, True)
-
