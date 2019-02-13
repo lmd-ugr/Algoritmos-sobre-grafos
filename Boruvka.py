@@ -80,7 +80,7 @@ def Boruvka(g, explicado=False):
         for i in range(len(G)):
             L.append(G[i].resaltar_arista(G[i].aristas[-1]).render(str(i)))
         
-        print(pes)
+        
         T.pasoapaso(L, textos)
         
     else:
