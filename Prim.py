@@ -1,44 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(4,2)
-g.añadir_arista(2,5)
-g.añadir_arista(4,6)
-g.añadir_arista(5,6)
-g.añadir_arista(6,7)
-g.añadir_arista(6,8)
-g.añadir_arista(7,8)
-
-
-# In[4]:
-
-
-g.ponderado([157,140,205,235,191,93,210])
-
-
-# In[5]:
-
-
-g.dibujar_ponderado('neato')
-
-
-# In[6]:
-
 
 def Prim(g, explicado=False):
     
@@ -183,10 +143,3 @@ def Prim(g, explicado=False):
                 V.append(a_a[1])
         
         return gg
-
-
-# In[7]:
-
-
-Prim(g, True)
-
