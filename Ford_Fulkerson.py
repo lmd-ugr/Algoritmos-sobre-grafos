@@ -1,44 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(1,4)
-g.añadir_arista(2,3)
-g.añadir_arista(3,4)
-g.añadir_arista(3,5)
-g.añadir_arista(4,5)
-
-
-# In[4]:
-
-
-g.ponderado([[10,10], [10,20], [10,0],[30,10], [10,15], [20,20],[10,10]])
-
-
-# In[8]:
-
-
-g.dibujar_ponderado()
-
-
-# In[10]:
-
 
 def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
     
@@ -282,10 +242,3 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
         
         print('Flujo máximo = ', F_maximo)
         return g
-
-
-# In[11]:
-
-
-H=Ford_Fulkerson(g, 1, 5, True)
-
