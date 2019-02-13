@@ -1,9 +1,3 @@
-from copy import copy, deepcopy
-from IPython.display import SVG, display, Image
-import graphviz as gv
-import matplotlib.pyplot as plt
-from ipywidgets import interact, IntSlider
-import math
 from grafos import *
 
 #SECUENCIA GRÁFICA DE UN GRAFO
