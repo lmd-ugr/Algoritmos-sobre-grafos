@@ -1,6 +1,6 @@
 from grafos import *
 
-def Kauffman_Malgrange(gg, explicado=False):
+def Kauffman_Malgrange(g, explicado=False):
     
     #Producto de matrices
     def producto(a,b):
