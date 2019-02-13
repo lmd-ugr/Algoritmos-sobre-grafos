@@ -1,36 +1,6 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
-get_ipython().magic('matplotlib inline')
 from grafos import *
 
-
-# In[14]:
-
-
-g=Grafo()
-
-
-# In[15]:
-
-
-g.añadir_arista(2,3)
-g.añadir_arista(1,2)
-g.añadir_arista(2,4)
-g.añadir_arista(2,5)
-
-
-# In[16]:
-
-
-g.dibujar('neato')
-
-
-# In[21]:
-
+# CÓDIGO PRUFER DE UN ÁRBOL
 
 def Codigo_Prufer(g1, explicado=False):    
     
@@ -151,15 +121,10 @@ def Codigo_Prufer(g1, explicado=False):
             return P # return solo P
 
 
-# In[22]:
 
-
-P=Codigo_Prufer(g, True)
-
-
-# In[23]:
-
-
+# DE CÓDIGO PRUFER A ÁRBOL        
+        
+        
 def Prufer_a_Arbol(P1, explicado=False):
     
     P=deepcopy(P1)
@@ -245,11 +210,4 @@ def Prufer_a_Arbol(P1, explicado=False):
         g.añadir_arista(vertices[0], vertices[1])
         
         return g
-        
-
-
-# In[24]:
-
-
-Prufer_a_Arbol(P, True);
-
+ 
