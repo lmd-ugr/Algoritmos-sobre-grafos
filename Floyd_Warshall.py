@@ -104,7 +104,7 @@ def Floyd_Warshall(G, explicado=False):
                 M.append(m)
                 textos.append('Hay ciclos negativos, no se puede hallar el camino de peso mínimo.')
         
-        g.pasoapaso(M, textos)
+        G.pasoapaso(M, textos)
         
         return [M, textos]
 
