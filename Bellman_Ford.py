@@ -1,48 +1,4 @@
-
-# coding: utf-8
-
-# In[12]:
-
-
 from grafos import *
-
-
-# In[13]:
-
-
-import math
-
-
-# In[14]:
-
-
-g=Grafo()
-
-
-# In[15]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(3,2)
-g.añadir_arista(4,2)
-g.añadir_arista(4,3)
-
-
-# In[16]:
-
-
-g.ponderado([5,10,-5,10,10])
-
-
-# In[17]:
-
-
-g.dibujar_ponderado('circo')
-
-
-# In[18]:
-
 
 def Bellman_Ford(G, inicial, explicado=False):
     
@@ -194,25 +150,3 @@ def Bellman_Ford(G, inicial, explicado=False):
                 print('Hay ciclo negativo')
 
         return [m,n]
-
-
-# In[19]:
-
-
-Bellman_Ford(g,1,True)
-
-
-# In[20]:
-
-
-Bellman_Ford(g,1)
-
-
-# In[21]:
-
-
-for i in g.vertices:
-    print('Vértice ' + str(i) + ': ')
-    b=Bellman_Ford(g,i)
-    print('Output:', b, '\n')
-
