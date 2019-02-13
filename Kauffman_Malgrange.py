@@ -1,39 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
-import math
-
-
-# In[2]:
-
-
 from grafos import *
-
-
-# In[3]:
-
-
-g=Grafo()
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(2,3)
-g.añadir_arista(3,4)
-g.añadir_arista(3,5)
-g.añadir_arista(4,5)
-
-
-# In[4]:
-
-
-g.dibujar('neato')
-
-
-# In[5]:
-
 
 def Kauffman_Malgrange(gg, explicado=False):
     
@@ -272,10 +237,3 @@ def Kauffman_Malgrange(gg, explicado=False):
 
 
         return [M,l]
-
-
-# In[6]:
-
-
-Kauffman_Malgrange(g, True)
-
