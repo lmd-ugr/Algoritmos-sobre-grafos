@@ -1,41 +1,3 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
-get_ipython().magic('matplotlib inline')
-from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,5)
-g.añadir_arista(2,3)
-g.añadir_arista(2,6)
-g.añadir_arista(2,4)
-g.añadir_arista(2,5)
-g.añadir_arista(3,4)
-g.añadir_arista(4,6)
-
-
-# In[4]:
-
-
-g.dibujar('neato')
-
-
-# In[5]:
-
-
 #SECUENCIAS GRAFICAS
 
 def Secuencia_Grafica(G):
@@ -64,21 +26,6 @@ def Secuencia_Grafica(G):
             print('La secuencia es grAfica')
             parar = True
     return L
-
-
-# In[6]:
-
-
-L=Secuencia_Grafica(g)
-
-
-# In[7]:
-
-
-L
-
-
-# In[8]:
 
 
 def Secuencia_a_Grafo(lista1, explicado=False):
@@ -210,10 +157,4 @@ def Secuencia_a_Grafo(lista1, explicado=False):
             contador=contador+1
             
         return gg
-
-
-# In[9]:
-
-
-Secuencia_a_Grafo(L, True)
 
