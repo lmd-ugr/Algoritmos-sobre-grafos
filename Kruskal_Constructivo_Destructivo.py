@@ -14,7 +14,7 @@ def Kruskal_Constructivo(gg, explicado=False):
         G=[gg]
         textos=['Grafo inicial']
 
-        while len(aristas)>1:
+        while len(aristas)>=1:
 
             mini=min(pesos)
             pesos_nuevos.append(mini)
@@ -45,7 +45,7 @@ def Kruskal_Constructivo(gg, explicado=False):
     
     else:
         
-        while len(aristas)>1:
+        while len(aristas)>=1:
 
             mini=min(pesos)
             pesos_nuevos.append(mini)
