@@ -1,4 +1,4 @@
-#SECUENCIAS GRAFICAS
+#SECUENCIA GRÁFICA DE UN GRAFO
 
 def Secuencia_Grafica(G):
     l=[i[1] for i in G.grados()]
@@ -40,6 +40,8 @@ def Secuencia_a_Grafo(lista1, explicado=False):
         return ldef
 
 
+# DE SECUENCIA GRÁFICA A GRAFO
+    
 # -----------------------------------------------
 
 
