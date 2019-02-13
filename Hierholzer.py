@@ -1,39 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(1,4)
-g.añadir_arista(1,5)
-g.añadir_arista(2,3)
-g.añadir_arista(4,5)
-g.añadir_arista(5,6)
-g.añadir_arista(7,5)
-
-
-# In[4]:
-
-
-g.dibujar('neato')
-
-
-# In[6]:
-
 
 def Hierholzer(gg, explicado=False):
     
@@ -241,10 +206,3 @@ def Hierholzer(gg, explicado=False):
         del(K[0])
 
         return K
-
-
-# In[7]:
-
-
-Hierholzer(g, True)
-
