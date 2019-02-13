@@ -1,37 +1,6 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
 
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(5,2)
-g.añadir_arista(5,0)
-g.añadir_arista(2,6)
-g.añadir_arista(6,0)
-g.añadir_arista(6,3)
-g.añadir_arista(0,3)
-
-
-# In[4]:
-
-
-g.dibujar('neato')
-
-
-# In[5]:
-
+# ALGORITMO CUTTING DOWN
 
 def Destructivo(g, explicado=False):
 
@@ -92,16 +61,8 @@ def Destructivo(g, explicado=False):
 
         return [gg, G]
 
-
-# In[6]:
-
-
-Destructivo(g, True)
-
-
-# In[7]:
-
-
+# ALGORITMO BUILDING UP    
+    
 def Constructivo(gg, explicado=False):
     
     aristas=deepcopy(gg.aristas)
@@ -151,10 +112,3 @@ def Constructivo(gg, explicado=False):
             if len([i for i in g.ciclos() if len(i)>3])>0:
                 g.borrar_arista(a[0], a[1])
         return g
-
-
-# In[8]:
-
-
-Constructivo(g, True)
-
