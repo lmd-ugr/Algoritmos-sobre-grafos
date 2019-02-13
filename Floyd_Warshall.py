@@ -106,9 +106,6 @@ def Floyd_Warshall(G, explicado=False):
         
         G.pasoapaso(M, textos)
         
-        return [M, textos]
-
-        
     else:
 
         #Cambio de elementos de las matrices m y R.   
