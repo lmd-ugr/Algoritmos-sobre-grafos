@@ -1,3 +1,11 @@
+from copy import copy, deepcopy
+from IPython.display import SVG, display, Image
+import graphviz as gv
+import matplotlib.pyplot as plt
+from ipywidgets import interact, IntSlider
+import math
+from grafos import *
+
 #SECUENCIA GRÁFICA DE UN GRAFO
 
 def Secuencia_Grafica(G):
@@ -119,7 +127,7 @@ def Secuencia_a_Grafo(lista1, explicado=False):
                 L.append(G[i].resaltar_arista(ars[j]).render(str(i)))
                 j=j+1
 
-        g.pasoapaso(L, textos)
+        gg.pasoapaso(L, textos)
             
         
     else:
