@@ -1,46 +1,4 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
-
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,5)
-g.añadir_arista(5,2)
-g.añadir_arista(2,3)
-g.añadir_arista(3,4)
-g.añadir_arista(3,5)
-g.añadir_arista(3,6)
-g.añadir_arista(4,6)
-g.añadir_arista(5,6)
-
-
-# In[4]:
-
-
-g.ponderado([4,2,8,2,1,7,9,9,3])
-
-
-# In[5]:
-
-
-g.dibujar_ponderado('circo')
-
-
-# In[6]:
-
 
 def Boruvka(g, explicado=False):
     
@@ -182,10 +140,3 @@ def Boruvka(g, explicado=False):
         T.ponderado(pes)
         
         return T
-
-
-# In[7]:
-
-
-Boruvka(g, True)
-
