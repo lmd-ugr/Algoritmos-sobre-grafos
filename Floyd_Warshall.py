@@ -1,46 +1,4 @@
-
-# coding: utf-8
-
-# In[12]:
-
-
 from grafos import *
-
-
-# In[13]:
-
-
-import math
-
-
-# In[14]:
-
-
-g=Grafo()
-
-
-# In[15]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(3,2)
-
-
-# In[16]:
-
-
-g.ponderado([1,2,3])
-
-
-# In[17]:
-
-
-g.dibujar_ponderado('circo')
-
-
-# In[18]:
-
 
 def Floyd_Warshall(G, explicado=False):    
     
@@ -202,19 +160,3 @@ def Floyd_Warshall(G, explicado=False):
                 print('Hay ciclos negativos, no se puede hallar el camino de peso mínimo.')
 
         return [m,R]
-
-
-# In[19]:
-
-
-H=Floyd_Warshall(g, True)
-
-
-# In[20]:
-
-
-for i in range(len(H[0])):
-    print(H[1][i])
-    print(H[0][i])
-    print('\n')
-
