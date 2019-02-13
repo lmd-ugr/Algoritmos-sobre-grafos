@@ -1,42 +1,6 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from grafos import *
 
-
-# In[2]:
-
-
-g=Grafo()
-
-
-# In[3]:
-
-
-g.añadir_arista(1,2)
-g.añadir_arista(1,3)
-g.añadir_arista(3,2)
-g.añadir_arista(3,4)
-g.añadir_arista(3,5)
-
-
-# In[4]:
-
-
-g.ponderado([20,30,40, 25, 35])
-
-
-# In[5]:
-
-
-g.dibujar_ponderado()
-
-
-# In[6]:
-
+# ALGORITMO DE KRUSKAL CONSTRUCTIVO
 
 def Kruskal_Constructivo(gg, explicado=False):
     
@@ -99,17 +63,10 @@ def Kruskal_Constructivo(gg, explicado=False):
             g.ponderado(pesos_nuevos)
         
         return g
-        
-    
+  
 
 
-# In[7]:
-
-
-Kruskal_Constructivo(g, True)
-
-
-# In[8]:
+# ALGORITMO DE KRUSKAL DESTRUCTIVO     
 
 
 def Kruskal_Destructivo(g, explicado=False):
@@ -184,10 +141,3 @@ def Kruskal_Destructivo(g, explicado=False):
             gg.ponderado(pesos)
             
         return gg   
-
-
-# In[9]:
-
-
-Kruskal_Destructivo(g, True)
-
