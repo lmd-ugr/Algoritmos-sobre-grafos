@@ -9,12 +9,18 @@ class Grafo(object):
     
     def __init__(self, verts=[], aris=[]):   
         self.vertices=copy(verts)
-        self.aristas=copy(aris)
+        if len(aris)==0:
+            self.aristas=[]
+        else:
+            self.aristas=copy(aris)
+            for i in aris:
+                for j in i:
+                    if j not in self.vertices:
+                        self.vertices.append(j)
         self.dic_pesos={}
 
     def __repr__(self):  
         return str("Grafo con "+str(len(self.vertices))+" vertices y "+str(len(self.aristas))+" lados")    
-
 
     def __str__(self):
         return str("Grafo con vertices "+str(self.vertices)+" y lados "+str(self.aristas))    
