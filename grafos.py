@@ -7,13 +7,12 @@ import math
 
 class Grafo(object):
     
-    def __init__(self, verts=[], aris=[]):   #Creo mi grafo y creo una lista de vertices y aristas vacia que voy a ir rellenando.
+    def __init__(self, verts=[], aris=[]):   
         self.vertices=copy(verts)
         self.aristas=copy(aris)
         self.dic_pesos={}
-        #self.comp_conexas=[]
 
-    def __repr__(self):  # ME FALLA AL DARME LA EXPLICACION, MIRAR POR EJEMPLO EL ALAGORITMO DE PRIM, ME PONE 0 VERTICES Y X LADOS
+    def __repr__(self):  
         return str("Grafo con "+str(len(self.vertices))+" vertices y "+str(len(self.aristas))+" lados")    
 
 
@@ -245,8 +244,8 @@ class Grafo(object):
         aristas_incidentes=[i for i in self.aristas if v in i]
         return aristas_incidentes
     
-    def vecinos(self, v):     # Cojo las aristas incidentes en un vertice y añado a mi lista de vecinos los extremos de esas
-        l=self.aristas_incidentes(v)   # aristas que no sean el vertice que estoy estudiando.
+    def vecinos(self, v):     
+        l=self.aristas_incidentes(v) 
         lista_vecinos=[]
         for i in l:
             if i[0] == v:
@@ -265,30 +264,15 @@ class Grafo(object):
                 l.append(i)
         
         return l
-    
-    """def componentes_conexas(self): # Quito todos los vertices aislados y lo que me queda es conexo.    
-        
-        l=self.vertices_aislados(self)
-        vertices_copy=deepcopy(self.vertices)
-        
-        for i in l:
-            self.comp_conexas.append([i])
-            vertices_copy.remove(i)
-        
-        self.comp_conexas.append(vertices_copy)
-        
-        return self.comp_conexas"""
             
-    def componentes_conexas(self): # Quito todos los vertices aislados y lo que me queda es conexo.    
-        
-        #try:
-        #    return self.comp_conexas
-        #except AttributeError:
+    def componentes_conexas(self): 
+
         self.comp_conexas=[]
         c=[]
         v=deepcopy(self.vertices)
         a=deepcopy(self.aristas)
-        # Primero quito vertices aislados
+
+        # Primero quitamos vertices aislados
 
         for i in self.vertices_aislados():
             self.comp_conexas.append([i])
@@ -398,8 +382,8 @@ class Grafo(object):
         
         return auxiliar(v_f,[v_inic],[v_inic],[])
     
-    def ciclos(self):#Tengo que mejorarla porque me devuelve ciclos de longitud dos, tipo [1,2,1], entonces debo diferenciar
-        L=[]         # si realmente hay aristas paralelas o es por no ser un grafo dirigido.
+    def ciclos(self):
+        L=[]         
         for i in self.vertices:
             for j in self.vecinos(i):
                 l=self.caminos_simples(j, i)
@@ -434,3 +418,46 @@ class Grafo(object):
         
         interact(plot,d=IntSlider(min=0,max=len(lg)-1,step=1,value=0))
 
+    def Prufer(self):
+        P=[]
+        g=deepcopy(self)
+
+        if g.es_arbol()==False:
+            return ValueError, 'El grafo NO es un árbol.'
+
+        else:
+
+            while len(g.vertices)>2:
+
+                #Busco el nodo de menor etiqueta con grado 1
+
+                n = [i for i in g.vertices if g.grado(i)==1]
+                n.sort()
+                print('n= ', n)
+                borrar_nodo=n[0]
+                print('n[0]= ', borrar_nodo)
+
+                # Veo cual es su arista incidente y cojo el otro extremo
+
+                borrar_arista = g.aristas_incidentes(borrar_nodo)[0]
+                print('borrar arista= ', borrar_arista)
+
+
+                if borrar_arista[0] == borrar_nodo:
+                    añadir_nodo = borrar_arista[1]
+                else:
+                    añadir_nodo = borrar_arista[0]
+                print('nodo añadido= ', añadir_nodo)
+
+                # Ahora añado ese nodo al codigo Prufer P y borro el vertice del grafo
+
+                P.append(añadir_nodo)
+                print('P= ', P)
+
+                print('vertices= ', g.vertices)
+
+
+                g.borrar_vertice(borrar_nodo)
+
+
+            return P
