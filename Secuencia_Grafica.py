@@ -30,6 +30,9 @@ def Secuencia_Grafica(G):
     return L
 
 
+# DE SECUENCIA GRÁFICA A GRAFO
+
+
 def Secuencia_a_Grafo(lista1, explicado=False):
 
     def n_vert_aumentados(l1,l2):
@@ -41,16 +44,11 @@ def Secuencia_a_Grafo(lista1, explicado=False):
                 ldef.append((l1[i], l2[i]))
         return ldef
 
-
-# DE SECUENCIA GRÁFICA A GRAFO
     
 # -----------------------------------------------
 
-
-
     def grados_inic(l):
         return [i-1 for i in l]
-
 
 
 
