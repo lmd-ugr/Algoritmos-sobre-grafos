@@ -1,8 +1,4 @@
-
-# coding: utf-8
-
-# In[ ]:
-
+from grafos import*
 
 def Polinomio_Cromatico(g, n_colores):
     
