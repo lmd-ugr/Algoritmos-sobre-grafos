@@ -269,7 +269,7 @@ class Grafo(object):
             else:
                 a_nuevas.append((i[0],v))    
 
-        # elimino mi vértice 3 y añado las nuevas aristas siempre que no sean lazos
+        # elimino el nodo v_eliminado y añado las nuevas aristas siempre que no sean lazos
         g.borrar_vertice(v_eliminado)
 
         for i in a_nuevas:
