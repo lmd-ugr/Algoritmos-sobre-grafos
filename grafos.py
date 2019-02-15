@@ -417,7 +417,7 @@ class Grafo(object):
         
         return auxiliar(v_f,[v_inic],[v_inic],[])
     
-    def ciclos(self):
+    def ciclos(self, longitud=-1):
         L=[]         
         for i in self.vertices:
             for j in self.vecinos(i):
@@ -425,7 +425,12 @@ class Grafo(object):
                 for k in l:
                     k.insert(0,i)
                     L.append(k)
-        return L
+        
+        if longitud!=-1:
+            L1=[i for i in L if len(i)>longitud]
+            return L1
+        else:
+            return L
     
     def es_arbol(self):   #Ver que el tamaño es n-1 siendo n el orden
         
@@ -434,6 +439,14 @@ class Grafo(object):
         else:
             return False
 
+    def es_completo(self):
+        grados=[i[1] for i in self.grados()]
+
+        if len(set(grados))==1:
+            return True
+        else:
+            return False
+    
     def pasoapaso(self, lg, lt, cd=''):
         
         def plot(d=0):
