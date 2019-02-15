@@ -251,10 +251,8 @@ class Grafo(object):
         return aristas_incidentes
     
     def identificar_vertices(self,a,b):
-
-        g=deepcopy(self)
         
-        if g.grado(a) >= g.grado(b):
+        if self.grado(a) >= self.grado(b):
             v_eliminado=b
             v=a
         else:
@@ -263,21 +261,20 @@ class Grafo(object):
 
         # reescribo las aristas
         a_nuevas=[]
-        for i in g.aristas_incidentes(v_eliminado):
+        for i in self.aristas_incidentes(v_eliminado):
             if i[0]==v_eliminado:
                 a_nuevas.append((v,i[1]))
             else:
                 a_nuevas.append((i[0],v))    
 
-        # elimino el nodo v_eliminado y añado las nuevas aristas siempre que no sean lazos
-        g.borrar_vertice(v_eliminado)
+        # elimino mi vértice 3 y añado las nuevas aristas siempre que no sean lazos
+        self.borrar_vertice(v_eliminado)
 
         for i in a_nuevas:
             if i[0]!=i[1]:
-                if i not in g.aristas and (i[1], i[0]) not in g.aristas:
-                    g.añadir_arista(i[0], i[1])
-
-        return g
+                if i not in self.aristas and (i[1], i[0]) not in self.aristas:
+                    self.añadir_arista(i[0], i[1])
+                    
 
     def vecinos(self, v):     
         l=self.aristas_incidentes(v) 
