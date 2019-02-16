@@ -1,6 +1,7 @@
 from grafos import*
+from sympy import *
 
-def Polinomio_Cromatico(g, n_colores):
+def Polinomio_Cromatico(g):
     
     def descomponer(L1, L2, long_ant_1, long_ant_2): # Las longitudes anteriores me sirven para saber qué elemento empiezo a estudiar 
     
@@ -95,8 +96,7 @@ def Polinomio_Cromatico(g, n_colores):
     
     # ----------------------------------------------------------------------------------------
     
-   
-    x=n_colores
+    x=Symbol("x")
     n=len(g.vertices)
     pol=0
 
@@ -104,13 +104,7 @@ def Polinomio_Cromatico(g, n_colores):
 
     if g.es_arbol():
         return x*(x-1)**(n-1)
-    elif g.es_completo():
-        if x<n:
-            return 0
-        elif x==n:
-            return math.factorial(n)
-        else:
-            return math.factorial(x/math.factorial(x-n))
+    
     else:
 
         # Aquí empiezo a reducir mi grafo hasta conseguir árboles
@@ -168,4 +162,3 @@ def Polinomio_Cromatico(g, n_colores):
                 
         
         return pol
-
