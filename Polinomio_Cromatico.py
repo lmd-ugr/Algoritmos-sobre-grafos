@@ -1,7 +1,10 @@
 from grafos import*
 from sympy import *
+x=Symbol("x")
 
-def Polinomio_Cromatico(g):
+# Forma Iterativa 
+
+def Polinomio_Cromatico_Iterativo(g):
     
     def descomponer(L1, L2, long_ant_1, long_ant_2): # Las longitudes anteriores me sirven para saber qué elemento empiezo a estudiar 
     
@@ -95,8 +98,8 @@ def Polinomio_Cromatico(g):
     
     
     # ----------------------------------------------------------------------------------------
+
     
-    x=Symbol("x")
     n=len(g.vertices)
     pol=0
 
@@ -162,3 +165,25 @@ def Polinomio_Cromatico(g):
                 
         
         return pol
+
+    
+    
+    
+# Forma Recursiva ---------------------------------------------------------------------------    
+
+
+def Polinomio_Cromatico_Recursivo(G):
+    
+    lados=G.aristas
+    
+    if len(lados)==0:
+        return x**len(G.vertices)
+    
+    l=lados[0]
+    
+    Gl=deepcopy(G)
+    Gl.borrar_arista(l[0], l[1])
+    
+    Glp=deepcopy(G)
+    Glp.identificar_vertices(l[0],l[1])
+    return polcrom(Gl)-polcrom(Glp)
