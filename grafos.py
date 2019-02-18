@@ -235,14 +235,19 @@ class Grafo(object):
             self.vertices.remove(v) #Borro también todas las aristas adyacentes a v
             for i in self.aristas_incidentes(v):
                 self.aristas.remove(i)
+                del(self.dic_pesos[i])
         else:
             return False
         
     def borrar_arista(self, u, v):
         if (u,v) in self.aristas:
             self.aristas.remove((u,v))
+            if (u,v) in self.dic_pesos:
+                del(self.dic_pesos[(u,v)])
         elif (v,u) in self.aristas:
             self.aristas.remove((v,u))
+            if (v,u) in self.dic_pesos:
+                del(self.dic_pesos[(v,u)])
         else:
             return False
     
@@ -387,14 +392,19 @@ class Grafo(object):
     
     def es_euleriano(self):     # digo si un grafo es euleriano o si tiene un camino de euler.
         
-        l = [i[1] for i in self.grados() if i[1]%2==0]
+        if self.conexo()==False:
+            return 0
         
-        if len(l)==len(self.grados()):
-            return True
-        elif len(l)==len(self.grados())-2:
-            return 2
         else:
-            return False
+            
+            l = [i[1] for i in self.grados() if i[1]%2==0]
+            
+            if len(l)==len(self.grados()):
+                return 1
+            elif len(l)==len(self.grados())-2:
+                return 2
+            else:
+                return 0
     
     def caminos_simples(self, v_inic, v_f):
         
