@@ -85,7 +85,7 @@ def Bellman_Ford(G, inicial, explicado=False):
                 M.append(m1)
                 textos.append('Iteración ' + str(iteraciones + 1) + '\n' + 'Hay ciclo negativo')
         
-        g.pasoapaso(M,textos)
+        G.pasoapaso(M,textos)
 
         
     

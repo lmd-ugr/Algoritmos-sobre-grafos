@@ -1,7 +1,5 @@
 from grafos import *
 
-# ALGORITMO CUTTING DOWN
-
 def Destructivo(g, explicado=False):
 
     gg=deepcopy(g)
@@ -50,19 +48,18 @@ def Destructivo(g, explicado=False):
                 gg.borrar_arista(ciclos[0][1], ciclos[0][0])
                 g1=deepcopy(gg)
                 G.append(g1)
-                print('borro', (ciclos[0][1], ciclos[0][0]))
+                
             else:
                 gg.borrar_arista(ciclos[0][0], ciclos[0][1])
                 g1=deepcopy(gg)
                 G.append(g1)
-                print('borro', (ciclos[0][0], ciclos[0][1]))
 
             ciclos=[i for i in gg.ciclos() if len(i)>3]
 
-        return [gg, G]
+        return gg
 
-# ALGORITMO BUILDING UP    
-    
+
+
 def Constructivo(gg, explicado=False):
     
     aristas=deepcopy(gg.aristas)
@@ -75,7 +72,7 @@ def Constructivo(gg, explicado=False):
         E=[]
         g1=Grafo()
     
-        while len(aristas)>0:
+        while len(E) < len(gg.vertices)-1:
 
             a=aristas[0]
             g.añadir_arista(a[0], a[1])
@@ -104,7 +101,7 @@ def Constructivo(gg, explicado=False):
     
     else:
         
-        while len(aristas)>0:
+        while len(g.aristas) < len(gg.vertices)-1:
 
             a=aristas[0]
             g.añadir_arista(a[0], a[1])

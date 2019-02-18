@@ -23,7 +23,7 @@ def Boruvka(g, explicado=False):
                 mini=min(pesos_candid)
                 pes.append(mini)
                 arista_def=aristas_candid[pesos_candid.index(mini)]
-                T.añadir_arista(arista_def[0],arista_def[1])
+                T.añadir_arista_ponderada(arista_def[0],arista_def[1],g.dic_pesos[(arista_def[0],arista_def[1])])
                 mensaje='Añado la arista ' + str((arista_def[0],arista_def[1]))
                 textos.append(mensaje)
                 gg=deepcopy(T)
@@ -60,7 +60,7 @@ def Boruvka(g, explicado=False):
                     if candidata[1] in comp_conex[i]:
                         i=len(comp_conex) + 1
                     else:
-                        T.añadir_arista(candidata[0], candidata[1])
+                        T.añadir_arista_ponderada(candidata[0], candidata[1], g.dic_pesos[(candidata[0], candidata[1])])
                         pes.append(mini)
                         mensaje='Añado la arista ' + str((candidata[0], candidata[1]))
                         textos.append(mensaje)
@@ -80,7 +80,6 @@ def Boruvka(g, explicado=False):
         for i in range(len(G)):
             L.append(G[i].resaltar_arista(G[i].aristas[-1]).render(str(i)))
         
-        
         T.pasoapaso(L, textos)
         
     else:
@@ -94,8 +93,8 @@ def Boruvka(g, explicado=False):
                 mini=min(pesos_candid)
                 arista_def=aristas_candid[pesos_candid.index(mini)]
                 pes.append(mini)
-                T.añadir_arista(arista_def[0],arista_def[1])                
-
+                T.añadir_arista(arista_def[0],arista_def[1])  
+            
         # hago que las componentes conexas sean conjuntos para luego comprobar si una arista esta en una comp conexa
 
         comp_conex=[]

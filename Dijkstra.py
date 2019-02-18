@@ -1,4 +1,3 @@
-
 from grafos import *
 
 def Dijkstra(gg, inicial, explicado=False):
@@ -119,3 +118,4 @@ def Dijkstra(gg, inicial, explicado=False):
             #print('escogidos: ', escogidos)
 
         return ['Pesos=', m, 'Ruta= ', n]
+
