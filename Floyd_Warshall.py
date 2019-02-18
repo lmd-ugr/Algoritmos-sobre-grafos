@@ -36,7 +36,7 @@ def Floyd_Warshall(G, explicado=False):
     for i in nodos:
         for j in nodos:
             if i==j:
-                l.append('-')
+                l.append(i)
             else:
                 l.append(j)
         R.append(l)
@@ -157,3 +157,4 @@ def Floyd_Warshall(G, explicado=False):
                 print('Hay ciclos negativos, no se puede hallar el camino de peso mínimo.')
 
         return [m,R]
+

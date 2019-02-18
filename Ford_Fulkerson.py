@@ -44,7 +44,7 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
     if explicado==True:
         
         leyenda_pesos=[]
-        textos=[]
+        textos=['Grafo inicial']
         aris_modif=[] # Aquí guardo las aristas modificadas para resaltarlas luego
         g=deepcopy(gg)
         pesos_inicial=deepcopy(g.dic_pesos)
@@ -155,7 +155,6 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
         
         L.append(g.dibujar_ponderado().render(str(len(G)+1)))
         
-        textos.append('')
         textos.append('Flujo máximo = ' + str(F_maximo))
         
         g.pasoapaso(L,textos, leyenda_pesos)
@@ -242,3 +241,4 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
         
         print('Flujo máximo = ', F_maximo)
         return g
+

@@ -235,7 +235,8 @@ class Grafo(object):
             self.vertices.remove(v) #Borro también todas las aristas adyacentes a v
             for i in self.aristas_incidentes(v):
                 self.aristas.remove(i)
-                del(self.dic_pesos[i])
+                if i in self.dic_pesos:
+                    del(self.dic_pesos[i])
         else:
             return False
         
@@ -478,7 +479,7 @@ class Grafo(object):
         g=deepcopy(self)
 
         if g.es_arbol()==False:
-            return ValueError, 'El grafo NO es un árbol.'
+            return ValueError, 'El grafo no es un árbol.'
 
         else:
 
@@ -488,29 +489,20 @@ class Grafo(object):
 
                 n = [i for i in g.vertices if g.grado(i)==1]
                 n.sort()
-                print('n= ', n)
                 borrar_nodo=n[0]
-                print('n[0]= ', borrar_nodo)
-
+                
                 # Veo cual es su arista incidente y cojo el otro extremo
 
                 borrar_arista = g.aristas_incidentes(borrar_nodo)[0]
-                print('borrar arista= ', borrar_arista)
-
-
+                
                 if borrar_arista[0] == borrar_nodo:
                     añadir_nodo = borrar_arista[1]
                 else:
                     añadir_nodo = borrar_arista[0]
-                print('nodo añadido= ', añadir_nodo)
 
                 # Ahora añado ese nodo al codigo Prufer P y borro el vertice del grafo
 
                 P.append(añadir_nodo)
-                print('P= ', P)
-
-                print('vertices= ', g.vertices)
-
 
                 g.borrar_vertice(borrar_nodo)
 
@@ -588,15 +580,13 @@ class Grafo(object):
         listas=Secuencia_Grafica(lista)
 
         if listas!=0:
-
-            gg=Grafo()
             
             # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
 
             n=len(listas[0][0])
             for i in range(1,n+1):
                 if i not in listas[2]:
-                    gg.añadir_vertice(i)
+                    self.añadir_vertice(i)
 
             while len(listas[1])>0:
                 # Ahora compruebo qué vértice toca añadir y con quien se une
@@ -607,11 +597,9 @@ class Grafo(object):
                 # Añado las aristas correspondientes al nuevo vertice
 
                 for i in listas[1][-1]:
-                    gg.añadir_arista(v_añadido,i)
+                    self.añadir_arista(v_añadido,i)
 
                 del(listas[1][-1])
-
-            return gg
         
         else:
             return ValueError, 'La secuencia no es grafica.'
