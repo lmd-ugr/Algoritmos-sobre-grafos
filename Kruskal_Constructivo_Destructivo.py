@@ -1,7 +1,5 @@
 from grafos import *
 
-# ALGORITMO DE KRUSKAL CONSTRUCTIVO
-
 def Kruskal_Constructivo(gg, explicado=False):
     
     aristas=deepcopy(gg.aristas)
@@ -14,7 +12,7 @@ def Kruskal_Constructivo(gg, explicado=False):
         G=[gg]
         textos=['Grafo inicial']
 
-        while len(aristas)>=1:
+        while len(g.aristas) < len(gg.vertices)-1:
 
             mini=min(pesos)
             pesos_nuevos.append(mini)
@@ -45,7 +43,7 @@ def Kruskal_Constructivo(gg, explicado=False):
     
     else:
         
-        while len(aristas)>=1:
+        while len(g.aristas) < len(gg.vertices)-1:
 
             mini=min(pesos)
             pesos_nuevos.append(mini)
@@ -63,11 +61,8 @@ def Kruskal_Constructivo(gg, explicado=False):
             g.ponderado(pesos_nuevos)
         
         return g
-  
-
-
-# ALGORITMO DE KRUSKAL DESTRUCTIVO     
-
+        
+ 
 
 def Kruskal_Destructivo(g, explicado=False):
 
@@ -141,3 +136,4 @@ def Kruskal_Destructivo(g, explicado=False):
             gg.ponderado(pesos)
             
         return gg   
+

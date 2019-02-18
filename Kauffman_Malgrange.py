@@ -132,6 +132,7 @@ def Kauffman_Malgrange(g, explicado=False):
         H.append(a)
         textos.append('Matriz de partida \n')
 
+        #print(m)
         M=producto(m,m)
         a=deepcopy(M)
         H.append(a)
@@ -227,4 +228,5 @@ def Kauffman_Malgrange(g, explicado=False):
                     l.append(j)
 
 
-        return [M,l]
+        return l
+
