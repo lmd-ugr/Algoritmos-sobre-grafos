@@ -85,7 +85,7 @@ def Fleury(g, explicado=False):
                         gg.añadir_arista(a_incidentes[i][0], a_incidentes[i][1])
                         i = i+1 
     
-        L=[G[0].dibujar().render('0')]
+        L=[G[0].dibujar('neato').render('0')]
 
         for i in range(1,len(G)-1):
             L.append(G[i].resaltar_arista(E[i-1]).render(str(i)))
@@ -143,3 +143,4 @@ def Fleury(g, explicado=False):
                         i = i+1 
         
         return E
+            
