@@ -132,15 +132,6 @@ def Kauffman_Malgrange(g, explicado=False):
         H.append(a)
         textos.append('Matriz de partida \n')
 
-        '''m[1][0]=math.inf
-        m[2][0]=math.inf
-        m[2][1]=math.inf
-        m[3][2]=math.inf
-        m[4][2]=math.inf
-        m[4][0]=(5,1)
-        m[4][1]=(5,2)'''
-
-        #print(m)
         M=producto(m,m)
         a=deepcopy(M)
         H.append(a)
