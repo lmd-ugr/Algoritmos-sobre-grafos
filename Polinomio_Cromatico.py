@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[2]:
-
-
 from sympy import *
 from grafos import *
 
@@ -90,7 +84,6 @@ def Polinomio_Cromatico_Iterativo(g):
         # He ido comprobando todos los grafos nuevos añadidos a L1 y L2, si he visto que todo son árboles, retorno True para terminar 
         # el proceso en la funcion POlinomio_Cromatico
 
-        print(arboles_L1,arboles_L2)
         if arboles_L1==0 and arboles_L2==0:
             return [L1,L2, len(L1_copia), len(L2_copia), True]
         else:
