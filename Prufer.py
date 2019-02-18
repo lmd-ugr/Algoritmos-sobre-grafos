@@ -1,7 +1,5 @@
 from grafos import *
 
-# DE CÓDIGO PRUFER A ÁRBOL              
-        
 def Prufer_a_Arbol(P1, explicado=False):
     
     P=deepcopy(P1)
@@ -87,4 +85,3 @@ def Prufer_a_Arbol(P1, explicado=False):
         g.añadir_arista(vertices[0], vertices[1])
         
         return g
- 
