@@ -1,15 +1,9 @@
-
-# coding: utf-8
-
-# In[2]:
-
-
 from sympy import *
 from grafos import *
 
 # Forma Iterativa 
 
-def Polinomio_Cromatico_Iterativo(g):
+def Polinomio_Cromatico_Iterativo(g, valor='x'):
     
     def descomponer(L1, L2, long_ant_1, long_ant_2): # Las longitudes anteriores me sirven para saber qué elemento empiezo a estudiar 
     
@@ -99,7 +93,13 @@ def Polinomio_Cromatico_Iterativo(g):
     
     # ----------------------------------------------------------------------------------------
     
-    x=Symbol("x")
+    if type(valor) == str:
+        x=Symbol(valor)
+    elif type(valor)==int and valor >= 0:
+        x=valor
+    else:
+        return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+        
     n=len(g.vertices)
     pol=0
 
@@ -163,15 +163,21 @@ def Polinomio_Cromatico_Iterativo(g):
                 n=len(i.vertices)
                 pol=pol - (x*(x-1)**(n-1))
                 
-        
-        return pol
+        p=expand(pol)
+        return p
 
     
  # Forma Recursiva -----------------------------------------------------------------   
     
-    
-def Polinomio_Cromatico_Recursivo(G):
-    x=Symbol("x")
+def Polinomio_Cromatico_Recursivo(G, valor='x'):
+    if type(valor) == str:
+        x=Symbol(valor)
+    elif type(valor)==int and valor >= 0:
+        x=valor
+    else:
+        return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+        
+        
     lados=G.aristas
     if len(lados)==0:
         return x**len(G.vertices)
@@ -180,5 +186,5 @@ def Polinomio_Cromatico_Recursivo(G):
     Gl.borrar_arista(l[0], l[1])
     Glp=deepcopy(G)
     Glp.identificar_vertices(l[0],l[1])
-    return Polinomio_Cromatico_Recursivo(Gl) - Polinomio_Cromatico_Recursivo(Glp)
-
+    
+    return Polinomio_Cromatico_Recursivo(Gl,valor) - Polinomio_Cromatico_Recursivo(Glp,valor)

@@ -4,6 +4,7 @@ import graphviz as gv
 import matplotlib.pyplot as plt
 from ipywidgets import interact, IntSlider
 import math
+from sympy import *
 
 class Grafo(object):
     
@@ -53,122 +54,7 @@ class Grafo(object):
             
         return g
 
-    def resaltar_arista(self, arista, pesos_nuevos={}, acolor='red', anchura='3', motor='neato'):
-        
-        arist=deepcopy(self.aristas)
-        p=pesos_nuevos
-
-        g=gv.Graph(format='svg', engine=motor)
-        g.attr('node', shape='circle')
-        g.attr('node', style='filled')
-
-        if type(arista)==list:
-            l1=[]
-            l2=[]
-            pl2=[]
-
-            for i in arista:
-                if i in arist or (i[1], i[0]) in arist:
-                    l1.append(i)
-                else:
-                    l2.append(i)
-                    if len(p)!=0:
-                        pl2.append(p[i]) #Guardo el peso de la nueva arista que quiero añadir
-
-            l3=[i for i in arist if i not in l1 and (i[1], i[0]) not in l1]
-
-            if len(self.dic_pesos)==0:
-                for i in l3:
-                    g.edge(str(i[0]), str(i[1]))
-            else:
-                for i in l3:
-                    if i in self.dic_pesos:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-                    else:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[(i[1], i[0])]))
-
-
-            g.attr('edge', color=acolor, penwidth=anchura)
-
-            if len(self.dic_pesos)==0:
-                for i in l1:
-                    g.edge(str(i[0]), str(i[1]))
-            else:
-                for i in l1:
-                    if i in self.dic_pesos:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-                    else:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[(i[1], i[0])]))
-                        
-            if len(p)==0:
-                for i in l2:
-                    g.edge(str(i[0]), str(i[1]))
-            else:
-                for i in l2:
-                    g.edge(str(i[0]), str(i[1]), str(p[i]))
-
-        else:
-            if arista not in arist and (arista[1], arista[0]) not in arist:
-                if len(self.dic_pesos)==0:
-                    for i in arist:
-                        g.edge(str(i[0]), str(i[1]))
-                else:
-                    for i in arist:
-                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-                
-                for i in self.vertices_aislados():
-                    g.node(str(i))
-
-                g.attr('edge', color=acolor, penwidth=anchura)
-                if len(p)==0:
-                    g.edge(str(arista[0]), str(arista[1]))
-                else:
-                    g.edge(str(arista[0]), str(arista[1]), str(p[arista]))
-
-
-            else:
-                if arista in arist:
-                    arist.remove(arista)
-
-                    if len(self.dic_pesos)==0:
-                        for i in arist:
-                            g.edge(str(i[0]), str(i[1]))
-                    else:
-                        for i in arist:
-                            g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-                
-                    for i in self.vertices_aislados():
-                        g.node(str(i))
-
-                    g.attr('edge', color=acolor, penwidth=anchura)
-
-                    if len(self.dic_pesos)==0:
-                        g.edge(str(arista[0]), str(arista[1]))
-                    else:
-                        g.edge(str(arista[0]), str(arista[1]), str(self.dic_pesos[arista]))
-                
-                else:
-                    arist.remove((arista[1], arista[0]))
-
-                    if len(self.dic_pesos)==0:
-                        for i in arist:
-                            g.edge(str(i[0]), str(i[1]))
-                    else:
-                        for i in arist:
-                            g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
-                
-                    for i in self.vertices_aislados():
-                        g.node(str(i))
-
-                    g.attr('edge', color=acolor, penwidth=anchura)
-
-                    if len(self.dic_pesos)==0:
-                        g.edge(str(arista[0]), str(arista[1]))
-                    else:
-                        g.edge(str(arista[0]), str(arista[1]),str(self.dic_pesos[(arista[1], arista[0])]))
-
-        return g
-
+    
     def resaltar_nodo(self, nodo, ncolor='red', motor='neato'):
     
         g=gv.Graph(format='svg', engine=motor)
@@ -509,7 +395,7 @@ class Grafo(object):
 
             return P
     
-    def Secuencia_a_Grafo(self, lista):
+    def Secuencia_a_Grafo(self, lista, explicado=False):
     
         # Primero comprobamos que la lista introducida es una secuencia grafica 
 
@@ -580,26 +466,216 @@ class Grafo(object):
         listas=Secuencia_Grafica(lista)
 
         if listas!=0:
+
+            if explicado==True:
+
+                G=[]
+                textos=['Grafo inicial']
             
-            # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
+                # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
 
-            n=len(listas[0][0])
-            for i in range(1,n+1):
-                if i not in listas[2]:
-                    self.añadir_vertice(i)
+                n=len(listas[0][0])
+                for i in range(1,n+1):
+                    if i not in listas[2]:
+                        self.añadir_vertice(i)
+                
+                g=deepcopy(self)
+                G.append(g.dibujar())
 
-            while len(listas[1])>0:
-                # Ahora compruebo qué vértice toca añadir y con quien se une
+                while len(listas[1])>0:
+                    # Ahora compruebo qué vértice toca añadir y con quien se une
 
-                v_añadido=listas[2][-1]
-                del(listas[2][-1])
+                    v_añadido=listas[2][-1]
+                    del(listas[2][-1])
 
-                # Añado las aristas correspondientes al nuevo vertice
+                    self.añadir_vertice(v_añadido)
+                    g=deepcopy(self)
+                    G.append(g.resaltar_nodo(v_añadido))
+                    textos.append('Añadimos el vértice ' + str(v_añadido))
 
-                for i in listas[1][-1]:
-                    self.añadir_arista(v_añadido,i)
+                    # Añado las aristas correspondientes al nuevo vertice
+                    E=[]
+                    for i in listas[1][-1]:
+                        self.añadir_arista(v_añadido,i)
+                        E.append((v_añadido,i))
 
-                del(listas[1][-1])
+                    g=deepcopy(self)
+                    G.append(g.resaltar_arista(E))
+                    textos.append('Añadimos las aristas: ' + str(E))
+
+                    del(listas[1][-1])
+                
+               
+                H=[]
+                for i in range(len(G)):
+                    H.append(G[i].render(str(i)))
+
+                self.pasoapaso(H, textos)
+
+            else:
+                # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
+
+                n=len(listas[0][0])
+                for i in range(1,n+1):
+                    if i not in listas[2]:
+                        self.añadir_vertice(i)
+
+                while len(listas[1])>0:
+                    # Ahora compruebo qué vértice toca añadir y con quien se une
+
+                    v_añadido=listas[2][-1]
+                    del(listas[2][-1])
+
+                    # Añado las aristas correspondientes al nuevo vertice
+
+                    for i in listas[1][-1]:
+                        self.añadir_arista(v_añadido,i)
+
+                    del(listas[1][-1])
         
         else:
             return ValueError, 'La secuencia no es grafica.'
+
+    
+    def resaltar_arista(self, aristas, pesos_nuevos={}, acolor='red', anchura='3', motor='neato'):
+        
+        arist=deepcopy(self.aristas)
+        p=pesos_nuevos
+        arista=deepcopy(aristas)
+
+        g=gv.Graph(format='svg', engine=motor)
+        g.attr('node', shape='circle')
+        g.attr('node', style='filled')
+
+        if type(arista)==list:
+            l1=[]
+            l2=[]
+            pl2=[]
+
+            for i in arista:
+                if i in arist or (i[1], i[0]) in arist:
+                    l1.append(i)
+                else:
+                    l2.append(i)
+                    if len(p)!=0:
+                        pl2.append(p[i]) #Guardo el peso de la nueva arista que quiero añadir
+
+            l3=[i for i in arist if i not in l1 and (i[1], i[0]) not in l1]
+
+            if len(self.dic_pesos)==0:
+                for i in l3:
+                    g.edge(str(i[0]), str(i[1]))
+            else:
+                for i in l3:
+                    if i in self.dic_pesos:
+                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                    else:
+                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[(i[1], i[0])]))
+
+
+            g.attr('edge', color=acolor, penwidth=anchura)
+
+            if len(self.dic_pesos)==0:
+                for i in l1:
+                    g.edge(str(i[0]), str(i[1]))
+            else:
+                for i in l1:
+                    if i in self.dic_pesos:
+                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                    else:
+                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[(i[1], i[0])]))
+                        
+            if len(p)==0:
+                for i in l2:
+                    g.edge(str(i[0]), str(i[1]))
+            else:
+                for i in l2:
+                    g.edge(str(i[0]), str(i[1]), str(p[i]))
+            
+            for i in self.vertices_aislados():
+                g.node(str(i))
+
+        else:
+            if arista not in arist and (arista[1], arista[0]) not in arist:
+                if len(self.dic_pesos)==0:
+                    for i in arist:
+                        g.edge(str(i[0]), str(i[1]))
+                else:
+                    for i in arist:
+                        g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                
+                for i in self.vertices_aislados():
+                    g.node(str(i))
+
+                g.attr('edge', color=acolor, penwidth=anchura)
+                if len(p)==0:
+                    g.edge(str(arista[0]), str(arista[1]))
+                else:
+                    g.edge(str(arista[0]), str(arista[1]), str(p[arista]))
+
+
+            else:
+                if arista in arist:
+                    arist.remove(arista)
+
+                    if len(self.dic_pesos)==0:
+                        for i in arist:
+                            g.edge(str(i[0]), str(i[1]))
+                    else:
+                        for i in arist:
+                            g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                
+                    for i in self.vertices_aislados():
+                        g.node(str(i))
+
+                    g.attr('edge', color=acolor, penwidth=anchura)
+
+                    if len(self.dic_pesos)==0:
+                        g.edge(str(arista[0]), str(arista[1]))
+                    else:
+                        g.edge(str(arista[0]), str(arista[1]), str(self.dic_pesos[arista]))
+                
+                else:
+                    arist.remove((arista[1], arista[0]))
+
+                    if len(self.dic_pesos)==0:
+                        for i in arist:
+                            g.edge(str(i[0]), str(i[1]))
+                    else:
+                        for i in arist:
+                            g.edge(str(i[0]), str(i[1]), str(self.dic_pesos[i]))
+                
+                    for i in self.vertices_aislados():
+                        g.node(str(i))
+
+                    g.attr('edge', color=acolor, penwidth=anchura)
+
+                    if len(self.dic_pesos)==0:
+                        g.edge(str(arista[0]), str(arista[1]))
+                    else:
+                        g.edge(str(arista[0]), str(arista[1]),str(self.dic_pesos[(arista[1], arista[0])]))
+
+        return g
+    
+    def Polinomio_Cromatico(self, valor='x'):
+
+        G=deepcopy(self)
+
+        if type(valor) == str:
+            x=Symbol(valor)
+        elif type(valor)==int and valor >= 0:
+            x=valor
+        else:
+            return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+            
+            
+        lados=G.aristas
+        if len(lados)==0:
+            return x**len(G.vertices)
+        l=lados[0]
+        Gl=deepcopy(G)
+        Gl.borrar_arista(l[0], l[1])
+        Glp=deepcopy(G)
+        Glp.identificar_vertices(l[0],l[1])
+
+        return Gl.Polinomio_Cromatico(valor) - Glp.Polinomio_Cromatico(valor)

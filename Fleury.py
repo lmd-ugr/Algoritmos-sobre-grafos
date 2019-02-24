@@ -20,8 +20,6 @@ def Fleury(g, explicado=False):
     
     elif explicado:
         gg=deepcopy(g)
-        g1=deepcopy(g)
-        G=[g1, g1]  # Aquí guardo los distintos grafos que voy obteniendo
         textos=[]
         E=[]
         v_inic=vertice_inicial(gg)
@@ -29,6 +27,7 @@ def Fleury(g, explicado=False):
         verts=gg.vertices
         aris=gg.aristas
         v_a=v_inic
+        
         if g.es_euleriano()==1:
             s = 'Circuito '
         else:
@@ -43,12 +42,8 @@ def Fleury(g, explicado=False):
             if len(a_incidentes)==1:    # Si solo sale una arista, la cojo y cojo el otro extremo y los meto en V y E, y ya terminaría el while
                 E.append(a_incidentes[0])
                 gg.borrar_arista(a_incidentes[0][0], a_incidentes[0][1]) #Borro tanto la arista como el vértice
-                mensaje='Borro la airsta (' + str(a_incidentes[0][0]) + ',' + str(a_incidentes[0][1]) + ')' 
-                textos.append(mensaje)
-                g1=deepcopy(gg)
-                G.append(g1)
-                EE=deepcopy(E)
-                Circuito.append(s + 'de Euler: ' + str(EE))   
+                mensaje='Eliminamos la airsta (' + str(a_incidentes[0][0]) + ',' + str(a_incidentes[0][1]) + ')' 
+                textos.append(mensaje)  
                 verts.remove(v_a)
 
                 if a_incidentes[0][0]==v_a:
@@ -57,6 +52,9 @@ def Fleury(g, explicado=False):
                 else:
                     v_a=a_incidentes[0][0]
                     V.append(v_a)
+                    
+                EE=deepcopy(V)
+                Circuito.append(s + 'de Euler: ' + str(EE))
 
             else:
                 parar=False
@@ -74,24 +72,20 @@ def Fleury(g, explicado=False):
                             V.append(a_incidentes[i][0])
                             v_a=a_incidentes[i][0]
                             
-                        mensaje='Borro la airsta (' + str(a_incidentes[i][0]) + ',' + str(a_incidentes[i][1]) + ')'
+                        mensaje='Eliminamos la airsta (' + str(a_incidentes[i][0]) + ',' + str(a_incidentes[i][1]) + ')'
                         textos.append(mensaje)
-                        g1=deepcopy(gg)
-                        G.append(g1)
-                        EE=deepcopy(E)
+                        EE=deepcopy(V)
                         Circuito.append(s + 'de Euler: ' + str(EE))
                         parar=True
                     else:
                         gg.añadir_arista(a_incidentes[i][0], a_incidentes[i][1])
                         i = i+1 
     
-        L=[G[0].dibujar('neato').render('0')]
-
-        for i in range(1,len(G)-1):
-            L.append(G[i].resaltar_arista(E[i-1]).render(str(i)))
-            
-            
+        L=[g.dibujar('circo').render('0')]
         textos.insert(0, 'Grafo inicial')
+
+        for i in range(1,len(textos)):
+            L.append(g.resaltar_arista(E[0:i], {}, 'lightgrey', '3', 'circo').render(str(i)))
 
         g.pasoapaso(L, textos, Circuito)
         
@@ -142,5 +136,5 @@ def Fleury(g, explicado=False):
                         gg.añadir_arista(a_incidentes[i][0], a_incidentes[i][1])
                         i = i+1 
         
-        return E
+        return V
             

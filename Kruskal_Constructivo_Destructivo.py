@@ -9,8 +9,8 @@ def Kruskal_Constructivo(gg, explicado=False):
     
     if explicado==True:
         
-        G=[gg]
         textos=['Grafo inicial']
+        E=[]
 
         while len(g.aristas) < len(gg.vertices)-1:
 
@@ -28,16 +28,15 @@ def Kruskal_Constructivo(gg, explicado=False):
                 pesos_nuevos.remove(mini)
 
             mensaje='Añado la arista ' + str((a[0], a[1]))
+            E.append((a[0], a[1]))
             textos.append(mensaje)
 
             g.ponderado(pesos_nuevos)
-            g1=deepcopy(g)
-            G.append(g1)
 
-        L=[G[0].dibujar_ponderado().render('0')]
+        L=[gg.dibujar_ponderado('circo').render('0')]
 
-        for i in range(1,len(G)):
-            L.append(G[i].resaltar_arista(G[i].aristas[-1]).render(str(i)))
+        for i in range(1,len(textos)):
+            L.append(gg.resaltar_arista(E[0:i], {}, 'red', '3', 'circo').render(str(i)))
 
         gg.pasoapaso(L, textos)
     
@@ -60,8 +59,7 @@ def Kruskal_Constructivo(gg, explicado=False):
 
             g.ponderado(pesos_nuevos)
         
-        return g
-        
+        return g      
  
 
 def Kruskal_Destructivo(g, explicado=False):
@@ -103,10 +101,10 @@ def Kruskal_Destructivo(g, explicado=False):
             textos.append(mensaje)
             aristas_marcadas.append((a_candidata[0], a_candidata[1]))
         
-        L=[G[0].dibujar_ponderado().render('0')]
+        L=[G[0].dibujar_ponderado('circo').render('0')]
         
         for i in range(1,len(G)-1):
-            L.append(G[i].resaltar_arista(aristas_marcadas[i-1]).render(str(i)))
+            L.append(G[i].resaltar_arista(aristas_marcadas[i-1],{},'red','3','circo').render(str(i)))
         
         L.append(G[-1].dibujar_ponderado().render(str(len(G))))
         textos.append('')

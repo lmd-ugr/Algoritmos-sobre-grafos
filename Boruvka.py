@@ -11,8 +11,8 @@ def Boruvka(g, explicado=False):
     
     if explicado==True:
     
-        G=[]
-        textos=[]
+        textos=['Grafo inicial']
+        E=[]
 
         for v in vertices_G:
             if v not in T.vertices:
@@ -26,8 +26,7 @@ def Boruvka(g, explicado=False):
                 T.añadir_arista_ponderada(arista_def[0],arista_def[1],g.dic_pesos[(arista_def[0],arista_def[1])])
                 mensaje='Añado la arista ' + str((arista_def[0],arista_def[1]))
                 textos.append(mensaje)
-                gg=deepcopy(T)
-                G.append(gg)
+                E.append((arista_def[0],arista_def[1]))
                 
 
         # hago que las componentes conexas sean conjuntos para luego comprobar si una arista esta en una comp conexa
@@ -64,8 +63,7 @@ def Boruvka(g, explicado=False):
                         pes.append(mini)
                         mensaje='Añado la arista ' + str((candidata[0], candidata[1]))
                         textos.append(mensaje)
-                        gg=deepcopy(T)
-                        G.append(gg)
+                        E.append((candidata[0], candidata[1]))
                         i=len(comp_conex) + 1
                 else:
                     i=i+1
@@ -75,10 +73,10 @@ def Boruvka(g, explicado=False):
             for i in T.componentes_conexas():
                 comp_conex.append(set(i))
         
-        L=[]
+        L=[g.dibujar_ponderado('circo').render('0')]
 
-        for i in range(len(G)):
-            L.append(G[i].resaltar_arista(G[i].aristas[-1]).render(str(i)))
+        for i in range(len(E)):
+            L.append(g.resaltar_arista(E[0:i+1], {}, 'red', '3', 'circo').render(str(i+1)))
         
         T.pasoapaso(L, textos)
         

@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[ ]:
-
-
 from grafos import *
 
 def Hierholzer(gg, explicado=False):
@@ -16,7 +10,7 @@ def Hierholzer(gg, explicado=False):
 
         elif g.es_euleriano()==2:
             g1=deepcopy(g)
-            G=[g1]
+            G=[]
             textos=[]
             C=[]
             CC=[]
@@ -27,6 +21,9 @@ def Hierholzer(gg, explicado=False):
             l=[i for i in g.vertices if g.grado(i)%2!=0]
             g.añadir_arista(l[0], l[1])
             textos.append('Grafo inicial. Arista añadida: ' + str((l[0], l[1])))
+
+            g2=deepcopy(g)
+            G.append(g2)
 
             ciclos=[i for i in g.ciclos() if len(i)>3]
 
@@ -45,6 +42,10 @@ def Hierholzer(gg, explicado=False):
             for i in range(len(C[0])-1): # Borro ahora las aristas que intervienen en mi ciclo principal
                 g.borrar_arista(C[0][i], C[0][i+1])
                 CC.append((C[0][i], C[0][i+1]))  
+            
+                                     # Esta condición es para no perder la arista añadida. Al resaltar la arista,
+            CC.append((l[0], l[1]))  # como son paralelas, la función resaltar somo me representa una, pero en realidad
+                                     # hay dos. Por eso la añado, para resaltarla. Pero solo una vez.
 
             aristas_marcadas.append(CC)
             g1=deepcopy(g)
@@ -123,7 +124,7 @@ def Hierholzer(gg, explicado=False):
 
             # WIDGETS 
 
-            L=[G[0].resaltar_arista((l[0], l[1])).render('0')]
+            L=[G[0].resaltar_arista([(l[0], l[1]), (l[0], l[1])]).render('0')]
 
             for i in range(1,len(G)):
                 L.append(G[i].resaltar_arista(aristas_marcadas[i-1]).render(str(i)))
@@ -169,10 +170,10 @@ def Hierholzer(gg, explicado=False):
                     C1.insert(pos, j)
                 C2.append('Circuito de Euler: ' + str(C1))  
                     
-            L=[G[0].dibujar().render('0')]
+            L=[G[0].dibujar('circo').render('0')]
             
             for i in range(1,len(G)):
-                L.append(G[i].resaltar_arista(E[i-1]).render(str(i)))
+                L.append(G[i].resaltar_arista(E[i-1],{},'red','3','circo').render(str(i)))
 
             g.pasoapaso(L, textos, C2)
             

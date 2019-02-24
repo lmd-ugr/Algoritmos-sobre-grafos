@@ -5,7 +5,7 @@ def Prim(g, explicado=False):
     if explicado==True:
         
         G=[]
-        textos=[]
+        textos=['Grafo inicial']
 
         #Primero escojo la arista de menor peso y un vértice suyo, será mi vértice inicial
 
@@ -76,10 +76,12 @@ def Prim(g, explicado=False):
                 V.append(a_a[0])
                 V.append(a_a[1])
 
-        L=[]
+        g2=deepcopy(g)
+        L=[g2.dibujar_ponderado('circo').render('0')]
 
         for i in range(len(G)):
-            L.append(G[i].resaltar_arista(G[i].aristas[-1]).render(str(i)))
+            g2=deepcopy(g)
+            L.append(g2.resaltar_arista(G[i].aristas, {}, 'red', '3', 'circo').render(str(i+1)))
 
         gg.pasoapaso(L, textos)
 
