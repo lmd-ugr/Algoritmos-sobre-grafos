@@ -2,3 +2,5 @@ matplotlib
 graphviz
 ipywidgets
 sympy
+IPython.display 
+math
