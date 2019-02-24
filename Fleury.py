@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Fleury(g, explicado=False):
     
@@ -80,12 +81,13 @@ def Fleury(g, explicado=False):
                     else:
                         gg.añadir_arista(a_incidentes[i][0], a_incidentes[i][1])
                         i = i+1 
-    
-        L=[g.dibujar('circo').render('0')]
+        
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[g.dibujar('circo').render(fout.name+str('0'))]
         textos.insert(0, 'Grafo inicial')
 
         for i in range(1,len(textos)):
-            L.append(g.resaltar_arista(E[0:i], {}, 'lightgrey', '3', 'circo').render(str(i)))
+            L.append(g.resaltar_arista(E[0:i], {}, 'lightgrey', '3', 'circo').render(fout.name+str(i)))
 
         g.pasoapaso(L, textos, Circuito)
         
