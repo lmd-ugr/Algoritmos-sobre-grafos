@@ -516,17 +516,9 @@ class Grafo(object):
 
         return g
     
-    def polinomio_cromatico(self, valor='x'):
+    def polinomio_cromatico(self,x):
 
-        G=deepcopy(self)
-
-        if type(valor) == str:
-            x=Symbol(valor)
-        elif type(valor)==int and valor >= 0:
-            x=valor
-        else:
-            raise ValueError('El valor introducido debe ser un entero no negativo o un carácter')
-            
+        G=deepcopy(self)            
             
         lados=G.aristas
         if len(lados)==0:
@@ -537,7 +529,7 @@ class Grafo(object):
         Glp=deepcopy(G)
         Glp.identificar_vertices(l[0],l[1])
 
-        return Gl.Polinomio_Cromatico(valor) - Glp.Polinomio_Cromatico(valor)
+        return Gl.polinomio_cromatico(x) - Glp.polinomio_cromatico(x)
 
 def Secuencia_a_Grafo(self, lista, explicado=False):
 
