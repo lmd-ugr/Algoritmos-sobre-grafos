@@ -1,1 +1,7 @@
 graphviz
+copy 
+IPython.display 
+matplotlib.pyplot
+ipywidgets
+math
+sympy
