@@ -98,7 +98,7 @@ def Polinomio_Cromatico_Iterativo(g, valor='x'):
     elif type(valor)==int and valor >= 0:
         x=valor
     else:
-        return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+        raise ValueError('El valor introducido debe ser un entero no negativo o un carácter')
         
     n=len(g.vertices)
     pol=0
@@ -175,7 +175,7 @@ def Polinomio_Cromatico_Recursivo(G, valor='x'):
     elif type(valor)==int and valor >= 0:
         x=valor
     else:
-        return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+        raise ValueError('El valor introducido debe ser un entero no negativo o un carácter')
         
         
     lados=G.aristas

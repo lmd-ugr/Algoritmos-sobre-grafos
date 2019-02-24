@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from ipywidgets import interact, IntSlider
 import math
 from sympy import *
+import tempfile
 
 class Grafo(object):
     
@@ -365,7 +366,7 @@ class Grafo(object):
         g=deepcopy(self)
 
         if g.es_arbol()==False:
-            return ValueError, 'El grafo no es un árbol.'
+            raise ValueError('El grafo no es un árbol.')
 
         else:
 
@@ -394,148 +395,6 @@ class Grafo(object):
 
 
             return P
-    
-    def Secuencia_a_Grafo(self, lista, explicado=False):
-    
-        # Primero comprobamos que la lista introducida es una secuencia grafica 
-
-        def Secuencia_Grafica(l):
-
-            # ll guarda los grados de la sucesion grafica, el elemento 'i' de 'll', será el grado del vértice 'i' de 'verts    
-            ll=deepcopy(l)
-
-            if -1 in ll:
-                return 0
-                parar=True
-            if len(set(ll))==1 and list(set(ll))[0]==0:
-                print('La secuencia es grAfica')
-                parar = True
-            
-            # Creo una lista 'verts' con las etiquetas que tendrán mis vértices en caso de ser una secuencia grafica.
-            
-            verts=[i+1 for i in range(len(l))]
-            vertices_borrados=[]
-            
-            # En L guardaré mi secuencia de listas
-            # En V guardaré las secuencias de vértices degradados, para luego reconstruir el grafo
-
-            L=[deepcopy(ll)]
-            V=[]
-            parar=False
-            
-            while parar==False:
-                maxi=max(ll)
-                v_max=verts[ll.index(maxi)]
-                vertices_borrados.append(v_max)
-                ll.remove(maxi)
-                verts.remove(v_max)
-                
-                # Creo una lista, pos, de posiciones y otra, val, de valores. En pos guardo las posiciones de los grados que reduzco,
-                # para saber a qué vertices corresponden. En val guardo los valores-1 de los grados reducidos, porque los voy a sustituir
-                # por 0 en ll temporalmente para poder ir buscando los sucesivos máximos de ll, para bajarles un grado.
-                # Creo tambien una lista de vértices degradados para que, en la reconstrucción del grafo, sepa quien se unia con quien
-                
-                pos=[]
-                vals=[]
-                v_degradados=[]
-                
-                for i in range(maxi):
-                    max2=max(ll)
-                    vals.append(max2-1)         # Le tenemos que bajar un grado
-                    pos.append(ll.index(max2))
-                    ll[ll.index(max2)]=0
-                
-                for i in range(maxi):
-                    ll[pos[i]]=vals[i]
-                    v_degradados.append(verts[pos[i]])
-                
-
-                L=L+[deepcopy(ll)]
-                V.append(deepcopy(v_degradados))
-                
-                #Aqui compruebo si tengo que parar ya
-                if -1 in ll:
-                    parar=True
-                    return 0
-                if len(set(ll))==1 and list(set(ll))[0]==0:
-                    print('La secuencia es grAfica')
-                    parar = True
-                    return [L, V, vertices_borrados]
-            
-            
-        listas=Secuencia_Grafica(lista)
-
-        if listas!=0:
-
-            if explicado==True:
-
-                G=[]
-                textos=['Grafo inicial']
-            
-                # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
-
-                n=len(listas[0][0])
-                for i in range(1,n+1):
-                    if i not in listas[2]:
-                        self.añadir_vertice(i)
-                
-                g=deepcopy(self)
-                G.append(g.dibujar())
-
-                while len(listas[1])>0:
-                    # Ahora compruebo qué vértice toca añadir y con quien se une
-
-                    v_añadido=listas[2][-1]
-                    del(listas[2][-1])
-
-                    self.añadir_vertice(v_añadido)
-                    g=deepcopy(self)
-                    G.append(g.resaltar_nodo(v_añadido))
-                    textos.append('Añadimos el vértice ' + str(v_añadido))
-
-                    # Añado las aristas correspondientes al nuevo vertice
-                    E=[]
-                    for i in listas[1][-1]:
-                        self.añadir_arista(v_añadido,i)
-                        E.append((v_añadido,i))
-
-                    g=deepcopy(self)
-                    G.append(g.resaltar_arista(E))
-                    textos.append('Añadimos las aristas: ' + str(E))
-
-                    del(listas[1][-1])
-                
-               
-                H=[]
-                for i in range(len(G)):
-                    H.append(G[i].render(str(i)))
-
-                self.pasoapaso(H, textos)
-
-            else:
-                # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
-
-                n=len(listas[0][0])
-                for i in range(1,n+1):
-                    if i not in listas[2]:
-                        self.añadir_vertice(i)
-
-                while len(listas[1])>0:
-                    # Ahora compruebo qué vértice toca añadir y con quien se une
-
-                    v_añadido=listas[2][-1]
-                    del(listas[2][-1])
-
-                    # Añado las aristas correspondientes al nuevo vertice
-
-                    for i in listas[1][-1]:
-                        self.añadir_arista(v_añadido,i)
-
-                    del(listas[1][-1])
-        
-        else:
-            return ValueError, 'La secuencia no es grafica.'
-
     
     def resaltar_arista(self, aristas, pesos_nuevos={}, acolor='red', anchura='3', motor='neato'):
         
@@ -657,7 +516,7 @@ class Grafo(object):
 
         return g
     
-    def Polinomio_Cromatico(self, valor='x'):
+    def polinomio_cromatico(self, valor='x'):
 
         G=deepcopy(self)
 
@@ -666,7 +525,7 @@ class Grafo(object):
         elif type(valor)==int and valor >= 0:
             x=valor
         else:
-            return ValueError('El valor introducido debe ser un entero no negativo o un carácter')
+            raise ValueError('El valor introducido debe ser un entero no negativo o un carácter')
             
             
         lados=G.aristas
@@ -679,3 +538,146 @@ class Grafo(object):
         Glp.identificar_vertices(l[0],l[1])
 
         return Gl.Polinomio_Cromatico(valor) - Glp.Polinomio_Cromatico(valor)
+
+def Secuencia_a_Grafo(self, lista, explicado=False):
+
+    # Primero comprobamos que la lista introducida es una secuencia grafica 
+
+    def Secuencia_Grafica(l):
+
+        # ll guarda los grados de la sucesion grafica, el elemento 'i' de 'll', será el grado del vértice 'i' de 'verts    
+        ll=deepcopy(l)
+
+        if -1 in ll:
+            return 0
+            parar=True
+        if len(set(ll))==1 and list(set(ll))[0]==0:
+            print('La secuencia es gráfica')
+            parar = True
+        
+        # Creo una lista 'verts' con las etiquetas que tendrán mis vértices en caso de ser una secuencia grafica.
+        
+        verts=[i+1 for i in range(len(l))]
+        vertices_borrados=[]
+        
+        # En L guardaré mi secuencia de listas
+        # En V guardaré las secuencias de vértices degradados, para luego reconstruir el grafo
+
+        L=[deepcopy(ll)]
+        V=[]
+        parar=False
+        
+        while parar==False:
+            maxi=max(ll)
+            v_max=verts[ll.index(maxi)]
+            vertices_borrados.append(v_max)
+            ll.remove(maxi)
+            verts.remove(v_max)
+            
+            # Creo una lista, pos, de posiciones y otra, val, de valores. En pos guardo las posiciones de los grados que reduzco,
+            # para saber a qué vertices corresponden. En val guardo los valores-1 de los grados reducidos, porque los voy a sustituir
+            # por 0 en ll temporalmente para poder ir buscando los sucesivos máximos de ll, para bajarles un grado.
+            # Creo tambien una lista de vértices degradados para que, en la reconstrucción del grafo, sepa quien se unia con quien
+            
+            pos=[]
+            vals=[]
+            v_degradados=[]
+            
+            for i in range(maxi):
+                max2=max(ll)
+                vals.append(max2-1)         # Le tenemos que bajar un grado
+                pos.append(ll.index(max2))
+                ll[ll.index(max2)]=0
+            
+            for i in range(maxi):
+                ll[pos[i]]=vals[i]
+                v_degradados.append(verts[pos[i]])
+            
+
+            L=L+[deepcopy(ll)]
+            V.append(deepcopy(v_degradados))
+            
+            #Aqui compruebo si tengo que parar ya
+            if -1 in ll:
+                parar=True
+                return 0
+            if len(set(ll))==1 and list(set(ll))[0]==0:
+                print('La secuencia es gráfica')
+                parar = True
+                return [L, V, vertices_borrados]
+        
+        
+    listas=Secuencia_Grafica(lista)
+
+    gout = Grafo()
+
+    if listas!=0:
+
+        if explicado==True:
+
+            G=[]
+            textos=['Grafo inicial']
+        
+            # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
+
+            n=len(listas[0][0])
+            for i in range(1,n+1):
+                if i not in listas[2]:
+                    gout.añadir_vertice(i)
+            
+            g=deepcopy(gout)
+            G.append(g.dibujar())
+
+            while len(listas[1])>0:
+                # Ahora compruebo qué vértice toca añadir y con quien se une
+
+                v_añadido=listas[2][-1]
+                del(listas[2][-1])
+
+                gout.añadir_vertice(v_añadido)
+                g=deepcopy(gout)
+                G.append(g.resaltar_nodo(v_añadido))
+                textos.append('Añadimos el vértice ' + str(v_añadido))
+
+                # Añado las aristas correspondientes al nuevo vertice
+                E=[]
+                for i in listas[1][-1]:
+                    gout.añadir_arista(v_añadido,i)
+                    E.append((v_añadido,i))
+
+                g=deepcopy(gout)
+                G.append(g.resaltar_arista(E))
+                textos.append('Añadimos las aristas: ' + str(E))
+
+                del(listas[1][-1])
+            
+            fout= fout = tempfile.NamedTemporaryFile()       
+            H=[]
+            for i in range(len(G)):
+                H.append(G[i].render(fout.name+str(i)))
+
+            gout.pasoapaso(H, textos)
+
+        else:
+            # Primero vemos cuántos vértices hay y los que se han quedado sin eliminar, pues serán el punto de partida
+
+            n=len(listas[0][0])
+            for i in range(1,n+1):
+                if i not in listas[2]:
+                    gout.añadir_vertice(i)
+
+            while len(listas[1])>0:
+                # Ahora compruebo qué vértice toca añadir y con quien se une
+
+                v_añadido=listas[2][-1]
+                del(listas[2][-1])
+
+                # Añado las aristas correspondientes al nuevo vertice
+
+                for i in listas[1][-1]:
+                    gout.añadir_arista(v_añadido,i)
+
+                del(listas[1][-1])
+        return gout    
+    else:
+        raise ValueError('La secuencia no es grafica.')
