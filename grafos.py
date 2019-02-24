@@ -531,7 +531,7 @@ class Grafo(object):
 
         return Gl.polinomio_cromatico(x) - Glp.polinomio_cromatico(x)
 
-def Secuencia_a_Grafo(self, lista, explicado=False):
+def Secuencia_a_Grafo(lista, explicado=False):
 
     # Primero comprobamos que la lista introducida es una secuencia grafica 
 
