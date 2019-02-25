@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Hierholzer(gg, explicado=False):
     
@@ -124,10 +125,11 @@ def Hierholzer(gg, explicado=False):
 
             # WIDGETS 
 
-            L=[G[0].resaltar_arista([(l[0], l[1]), (l[0], l[1])]).render('0')]
+            fout= fout = tempfile.NamedTemporaryFile()
+            L=[G[0].resaltar_arista([(l[0], l[1]), (l[0], l[1])]).render(fout.name+str('0'))]
 
             for i in range(1,len(G)):
-                L.append(G[i].resaltar_arista(aristas_marcadas[i-1]).render(str(i)))
+                L.append(G[i].resaltar_arista(aristas_marcadas[i-1]).render(fout.name+str(i)))
 
             g.pasoapaso(L, textos, t)
             
@@ -169,11 +171,12 @@ def Hierholzer(gg, explicado=False):
                 for j in i:
                     C1.insert(pos, j)
                 C2.append('Circuito de Euler: ' + str(C1))  
-                    
-            L=[G[0].dibujar('circo').render('0')]
+
+            fout= fout = tempfile.NamedTemporaryFile()        
+            L=[G[0].dibujar('circo').render(fout.name+str('0'))]
             
             for i in range(1,len(G)):
-                L.append(G[i].resaltar_arista(E[i-1],{},'red','3','circo').render(str(i)))
+                L.append(G[i].resaltar_arista(E[i-1],{},'red','3','circo').render(fout.name+str(i)))
 
             g.pasoapaso(L, textos, C2)
             

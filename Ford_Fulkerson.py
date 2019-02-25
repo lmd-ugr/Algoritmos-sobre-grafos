@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
     
@@ -11,26 +12,19 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
                 caminos.append(list(c_actual))
             else:
                 for i in g.vecinos(v_actual):
-                    #print((v_actual,i), ' = ', g.dic_pesos[(v_actual,i)][0])
                     if i not in v_usados:
                         if (v_actual,i) in g.aristas:
                             if g.dic_pesos[(v_actual,i)][0]!=0:
-                                #print('OK If')
                                 c_actual.append(i)
                                 v_usados.append(i)
-                                #print(v_f,c_actual,v_usados,caminos)
                                 auxiliar(v_f,c_actual,v_usados,caminos)
-                                #print('? If')
                                 v_usados.remove(i)
                                 c_actual.pop()
                         else:
                             if g.dic_pesos[(i, v_actual)][1]!=0:
-                                #print('OK Else')
                                 c_actual.append(i)
                                 v_usados.append(i)
-                                #print(v_f,c_actual,v_usados,caminos)
                                 auxiliar(v_f,c_actual,v_usados,caminos)
-                                #print('? Else')
                                 v_usados.remove(i)
                                 c_actual.pop()
             return caminos
@@ -73,7 +67,6 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
                         pes.append(g.dic_pesos[(i[j+1],i[j])][1])
 
                 maxi=max(pes)
-                #flujos.append(maxi)
 
                 for i in C:
                     if (i[j],i[j+1]) in g.aristas:
@@ -143,17 +136,18 @@ def Ford_Fulkerson(gg, v_ini, v_fin, explicado=False):
         p=deepcopy(g.dic_pesos)
         leyenda_pesos.append(p)
 
+
+        fout= fout = tempfile.NamedTemporaryFile()
         L=[]
-        
-        L.append(G[0].dibujar_ponderado().render('0'))
+        L.append(G[0].dibujar_ponderado().render(fout.name+str('0')))
 
         for i in range(1,len(G)):
-            L.append(G[i].resaltar_arista(aris_modif[i-1], {}, 'red', '3', 'dot').render(str(i)))
+            L.append(G[i].resaltar_arista(aris_modif[i-1], {}, 'red', '3', 'dot').render(fout.name+str(i)))
 
         # Añadimos ya el grafo final y un mensaje con el flujo máximo
 
         
-        L.append(g.dibujar_ponderado().render(str(len(G)+1)))
+        L.append(g.dibujar_ponderado().render(fout.name+str(len(G)+1)))
         
         textos.append('Flujo máximo = ' + str(F_maximo))
         

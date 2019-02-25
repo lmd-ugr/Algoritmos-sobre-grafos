@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Kruskal_Constructivo(gg, explicado=False):
     
@@ -33,10 +34,11 @@ def Kruskal_Constructivo(gg, explicado=False):
 
             g.ponderado(pesos_nuevos)
 
-        L=[gg.dibujar_ponderado('circo').render('0')]
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[gg.dibujar_ponderado('circo').render(fout.name+str('0'))]
 
         for i in range(1,len(textos)):
-            L.append(gg.resaltar_arista(E[0:i], {}, 'red', '3', 'circo').render(str(i)))
+            L.append(gg.resaltar_arista(E[0:i], {}, 'red', '3', 'circo').render(fout.name+str(i)))
 
         gg.pasoapaso(L, textos)
     
@@ -101,12 +103,13 @@ def Kruskal_Destructivo(g, explicado=False):
             textos.append(mensaje)
             aristas_marcadas.append((a_candidata[0], a_candidata[1]))
         
-        L=[G[0].dibujar_ponderado('circo').render('0')]
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[G[0].dibujar_ponderado('circo').render(fout.name+str('0'))]
         
         for i in range(1,len(G)-1):
-            L.append(G[i].resaltar_arista(aristas_marcadas[i-1],{},'red','3','circo').render(str(i)))
+            L.append(G[i].resaltar_arista(aristas_marcadas[i-1],{},'red','3','circo').render(fout.name+str(i)))
         
-        L.append(G[-1].dibujar_ponderado().render(str(len(G))))
+        L.append(G[-1].dibujar_ponderado().render(fout.name+str(len(G))))
         textos.append('')
 
         gg.pasoapaso(L, textos)

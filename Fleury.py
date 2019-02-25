@@ -139,4 +139,3 @@ def Fleury(g, explicado=False):
                         i = i+1 
         
         return V
-            

@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Destructivo(g, explicado=False):
 
@@ -28,12 +29,13 @@ def Destructivo(g, explicado=False):
 
             ciclos=[i for i in gg.ciclos() if len(i)>3]
 
-        L=[G[0].dibujar('circo').render('0')]
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[G[0].dibujar('circo').render(fout.name+str('0'))]
 
         for i in range(1,len(G)):
-            L.append(G[i].resaltar_arista(E[i-1],{},'red','3','circo').render(str(i)))
+            L.append(G[i].resaltar_arista(E[i-1],{},'red','3','circo').render(fout.name+str(i)))
         
-        L.append(G[-1].dibujar('circo').render(str(len(G))))
+        L.append(G[-1].dibujar('circo').render(fout.name+str(len(G))))
         
         textos.append('Grafo final')
 
@@ -70,7 +72,8 @@ def Constructivo(gg, explicado=False):
         
         contador=0
         g1=deepcopy(gg)
-        G=[g1.dibujar('circo').render(str(contador))]
+        fout= fout = tempfile.NamedTemporaryFile()
+        G=[g1.dibujar('circo').render(fout.name+str(contador))]
         contador=contador+1
         textos=['Grafo inicial']
         E=[]
@@ -82,7 +85,7 @@ def Constructivo(gg, explicado=False):
             g.añadir_arista(a[0], a[1])
             E.append((a[0], a[1]))
             g1=deepcopy(gg)
-            G.append(g1.resaltar_arista(E).render(str(contador)))
+            G.append(g1.resaltar_arista(E,{},'red','3','circo').render(fout.name+str(contador)))
             contador=contador+1
             textos.append('Añadimos la arista (' + str(a[0]) + ',' + str(a[1]) + ')')
             aristas.remove((a[0],a[1]))
@@ -90,12 +93,12 @@ def Constructivo(gg, explicado=False):
                 g.borrar_arista(a[0], a[1])
                 E.remove((a[0], a[1]))
                 g1=deepcopy(gg)
-                G.append(g1.resaltar_arista(E).render(str(contador)))
+                G.append(g1.resaltar_arista(E,{},'red','3','circo').render(fout.name+str(contador)))
                 contador=contador+1
                 textos.append('Borramos la arista (' + str(a[0]) + ',' + str(a[1]) + ')')
     
 
-        G.append(g.dibujar('circo').render(str(contador)))
+        G.append(g.dibujar('circo').render(fout.name+str(contador)))
         textos.append('Grafo final')
         
         g.pasoapaso(G, textos)

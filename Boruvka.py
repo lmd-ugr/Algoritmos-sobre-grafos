@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Boruvka(g, explicado=False):
     
@@ -73,10 +74,11 @@ def Boruvka(g, explicado=False):
             for i in T.componentes_conexas():
                 comp_conex.append(set(i))
         
-        L=[g.dibujar_ponderado('circo').render('0')]
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[g.dibujar_ponderado('circo').render(fout.name+str('0'))]
 
         for i in range(len(E)):
-            L.append(g.resaltar_arista(E[0:i+1], {}, 'red', '3', 'circo').render(str(i+1)))
+            L.append(g.resaltar_arista(E[0:i+1], {}, 'red', '3', 'circo').render(fout.name+str(i+1)))
         
         T.pasoapaso(L, textos)
         
