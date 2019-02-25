@@ -1,4 +1,5 @@
 from grafos import *
+import tempfile
 
 def Prufer_a_Arbol(P1, explicado=False):
     
@@ -57,12 +58,13 @@ def Prufer_a_Arbol(P1, explicado=False):
         
         PP.append('Grafo final')
 
-        L=[G[0].dibujar().render(str(0))]
+        fout= fout = tempfile.NamedTemporaryFile()
+        L=[G[0].dibujar().render(fout.name+str(0))]
 
         for i in range(1,len(G)-1):
-            L.append(G[i].resaltar_arista(aristas_añadidas[i-1]).render(str(i)))
+            L.append(G[i].resaltar_arista(aristas_añadidas[i-1]).render(fout.name+str(i)))
 
-        L.append(G[-1].dibujar().render(str(len(G))))
+        L.append(G[-1].dibujar().render(fout.name+str(len(G))))
 
         g.pasoapaso(L, textos, PP)
     
