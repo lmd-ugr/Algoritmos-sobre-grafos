@@ -354,7 +354,11 @@ class Grafo(object):
             if type(lg[d])==str:
                 display(SVG(lg[d]))
             elif type(lg[d])==list:
-                print(lg[d])
+                if type(lg[d][0])==list:
+                    for lgs in lg[d]:
+                        print(lgs)
+                else:
+                    print(lg[d])
             else:
                 print(lg[d])
             print(cod[d])
