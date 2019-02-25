@@ -865,7 +865,7 @@ def Hierholzer(gg, explicado=False):
                 g.borrar_arista(C[0][i], C[0][i+1])
                 CC.append((C[0][i], C[0][i+1]))  
             
-                                     # Esta condición es para no perder la arista añadida. Al resaltar la arista,
+                                     # Esta sentencia es para no perder la arista añadida. Al resaltar la arista,
             CC.append((l[0], l[1]))  # como son paralelas, la función resaltar somo me representa una, pero en realidad
                                      # hay dos. Por eso la añado, para resaltarla. Pero solo una vez.
 
@@ -1775,12 +1775,13 @@ def Prim(g, explicado=False):
                 V.append(a_a[0])
                 V.append(a_a[1])
 
+        fout= fout = tempfile.NamedTemporaryFile()
         g2=deepcopy(g)
-        L=[g2.dibujar_ponderado('circo').render('0')]
+        L=[g2.dibujar_ponderado('circo').render(fout.name+str('0'))]
 
         for i in range(len(G)):
             g2=deepcopy(g)
-            L.append(g2.resaltar_arista(G[i].aristas, {}, 'red', '3', 'circo').render(str(i+1)))
+            L.append(g2.resaltar_arista(G[i].aristas, {}, 'red', '3', 'circo').render(fout.name+str(i+1)))
 
         gg.pasoapaso(L, textos)
 
@@ -2260,7 +2261,8 @@ def Bellman_Ford(G, inicial, explicado=False):
             if mm!=m:
                 print('Hay ciclo negativo')
 
-        return [m,n]
+        d={'Distancias' : m, 'Ruta': n}
+        return d
 
 # F-W
 
@@ -2420,7 +2422,8 @@ def Floyd_Warshall(G, explicado=False):
             if mm != m:
                 print('Hay ciclos negativos, no se puede hallar el camino de peso mínimo.')
 
-        return [m,R]
+        d={'Distancias':m, 'Ruta':R}
+        return d
 
 # F-F
 
