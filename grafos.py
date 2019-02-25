@@ -837,10 +837,13 @@ def Hierholzer(gg, explicado=False):
             C=[]
             CC=[]
             aristas_marcadas=[]
+            resaltar=False
 
             # Añado la arista
 
             l=[i for i in g.vertices if g.grado(i)%2!=0]
+            if (l[0], l[1]) in g.aristas or (l[1], l[0]) in g.aristas:
+                resaltar=True
             g.añadir_arista(l[0], l[1])
             textos.append('Grafo inicial. Arista añadida: ' + str((l[0], l[1])))
 
@@ -865,8 +868,8 @@ def Hierholzer(gg, explicado=False):
                 g.borrar_arista(C[0][i], C[0][i+1])
                 CC.append((C[0][i], C[0][i+1]))  
             
-                                     # Esta sentencia es para no perder la arista añadida. Al resaltar la arista,
-            CC.append((l[0], l[1]))  # como son paralelas, la función resaltar somo me representa una, pero en realidad
+            if resaltar==True:                         # Esta sentencia es para no perder la arista añadida. Al resaltar la arista,
+                CC.append((l[0], l[1]))  # como son paralelas, la función resaltar somo me representa una, pero en realidad
                                      # hay dos. Por eso la añado, para resaltarla. Pero solo una vez.
 
             aristas_marcadas.append(CC)
@@ -947,7 +950,10 @@ def Hierholzer(gg, explicado=False):
             # WIDGETS 
 
             fout= fout = tempfile.NamedTemporaryFile()
-            L=[G[0].resaltar_arista([(l[0], l[1]), (l[0], l[1])]).render(fout.name+str('0'))]
+            if resaltar==True:
+                L=[G[0].resaltar_arista([(l[0], l[1]), (l[0], l[1])]).render(fout.name+str('0'))]
+            else:
+                L=[G[0].resaltar_arista((l[0], l[1])).render(fout.name+str('0'))]
 
             for i in range(1,len(G)):
                 L.append(G[i].resaltar_arista(aristas_marcadas[i-1]).render(fout.name+str(i)))
